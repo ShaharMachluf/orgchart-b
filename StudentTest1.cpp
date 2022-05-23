@@ -31,7 +31,6 @@ TEST_CASE("BUILD_ORG"){
         CHECK_NOTHROW(org_double_names.add_sub("adi", "adi"));
     }
 
-
     /**************************************************************/
     SUBCASE("level_order"){
         /*check level order with normal tree*/
@@ -42,7 +41,6 @@ TEST_CASE("BUILD_ORG"){
         }
     
     
-
         /*check level order with empty tree*/
         // CHECK_THROWS_MESSAGE(org_empty.begin_level_order(), "chart is empty!");
         CHECK_THROWS_MESSAGE(org_empty.end_level_order(), "chart is empty!");
@@ -52,7 +50,7 @@ TEST_CASE("BUILD_ORG"){
         for(auto it = org_double_names.begin_level_order(); it != org_double_names.end_level_order(); ++it){
             CHECK(*it == "adi");
         }
-    
+        
         /* check iter size*/
         std::vector<int> nums = {4, 3, 5, 3, 3, 5, 3, 3, 6, 4};
         int j = 0;
@@ -60,7 +58,7 @@ TEST_CASE("BUILD_ORG"){
             CHECK_EQ(it->size(), nums.at((size_t)j));
             j++;
         }
-
+        
     }
 
     SUBCASE("reverse_level_order"){
@@ -70,7 +68,7 @@ TEST_CASE("BUILD_ORG"){
         for(auto it = org.begin_reverse_order(); it != org.reverse_order(); ++it){
             CHECK_EQ(*it, v.at(i++));
         }
-    
+        
     
 
         /*check reverse level order with empty tree*/

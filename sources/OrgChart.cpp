@@ -108,7 +108,7 @@ namespace ariel{
     }
 
     string* OrgChart::Iterator::operator->(){
-        return &this->get_node()->data;
+        return &(this->get_node()->data);
     }
 
     struct Tree* OrgChart::Iterator::get_node(){
@@ -127,11 +127,17 @@ namespace ariel{
     }
 
     OrgChart& OrgChart::add_root(string s){
+        if(s.empty()){
+            throw("can't enter empty string");
+        }
         (*this->root).data = s;
         return *this;
     }
 
     OrgChart& OrgChart::add_sub(string sup, string inf){
+        if(inf.empty()){
+            throw("can't enter empty string");
+        }
         for(auto it = this->begin_level_order(); it != this->end_level_order(); ++it){
             if(*it == sup){
                 struct Tree *curr = new struct Tree;
@@ -145,7 +151,7 @@ namespace ariel{
                 return *this;
             }
         }
-        throw("%s doesn't exist", sup);
+        throw("first argument doesn't exist");
         return *this;
     }
     OrgChart::Iterator OrgChart::begin() const{
@@ -155,23 +161,41 @@ namespace ariel{
         return end_level_order();
     }
     OrgChart::Iterator OrgChart::begin_level_order() const{
+        if(this->root->data == ""){
+            throw("chart is empty!");
+        }
         return Iterator(*this, "level");
     }
     OrgChart::Iterator OrgChart::end_level_order() const{
+        if(this->root->data == ""){
+            throw("chart is empty!");
+        }
         Iterator end;
         return end;
     }
     OrgChart::Iterator OrgChart::begin_reverse_order(){
+        if(this->root->data == ""){
+            throw("chart is empty!");
+        }
         return Iterator(*this, "reverse");
     }
     OrgChart::Iterator OrgChart::reverse_order(){
+        if(this->root->data == ""){
+            throw("chart is empty!");
+        }
         Iterator end;
         return end;
     }
     OrgChart::Iterator OrgChart::begin_preorder(){
+        if(this->root->data == ""){
+            throw("chart is empty!");
+        }
         return Iterator(*this, "pre");
     }
     OrgChart::Iterator OrgChart::end_preorder(){
+        if(this->root->data == ""){
+            throw("chart is empty!");
+        }
         Iterator end;
         return end;
     }

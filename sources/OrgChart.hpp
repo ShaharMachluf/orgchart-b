@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include <iostream>
 
 namespace ariel{
     struct Tree{
