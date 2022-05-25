@@ -46,5 +46,6 @@ namespace ariel{
         Iterator end_preorder();
 
         friend std::ostream& operator<<(std::ostream& output, const OrgChart& other);
+        ~OrgChart();
     };
 }

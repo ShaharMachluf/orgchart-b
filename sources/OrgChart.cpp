@@ -207,4 +207,16 @@ namespace ariel{
         }
         return output<<res;
     }
+
+    OrgChart::~OrgChart(){
+        if(!this->root->data.empty()){
+            try{
+                for(auto it = begin_level_order(); it != end_level_order(); ++it){
+                    delete it.get_node();
+                }
+            }catch(...){}
+        }else{
+            delete this->root;
+        }
+    }
 }
