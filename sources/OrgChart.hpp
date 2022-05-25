@@ -24,9 +24,9 @@ namespace ariel{
             Iterator(const OrgChart &o ,const std::string& order);
             Iterator& operator++();
             std::string operator*();
-            bool operator==(const Iterator &other);
-            bool operator!=(const Iterator &other);
-            Iterator& operator=(Iterator &other);
+            bool operator==(const Iterator &other) const;
+            bool operator!=(const Iterator &other) const;
+            Iterator& operator=(const Iterator &other);
             std::string* operator->();
             struct Tree* get_node();
         };

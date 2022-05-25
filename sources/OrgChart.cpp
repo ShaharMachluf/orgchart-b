@@ -39,7 +39,7 @@ namespace ariel{
                 struct Tree* curr = temp.front();
                 temp.pop();
                 if(!curr->children.empty() && curr->children.at(0)!=NULL){
-                    for(int i=curr->children.size()-1; i>=0; i--){
+                    for(int i=(int)curr->children.size()-1; i>=0; i--){
                         uint pos = unsigned (i);
                         temp.push(curr->children.at(pos));
                     }
@@ -78,7 +78,7 @@ namespace ariel{
         return this->get_node()->data;
     }
     
-    bool OrgChart::Iterator::operator==(const Iterator &other){
+    bool OrgChart::Iterator::operator==(const Iterator &other) const{
         if(this->order == "level" || this->order == "pre"){
             if(this->q.empty() && other.q.empty()){
                 return true;
@@ -94,11 +94,11 @@ namespace ariel{
         return(this->s.top() == other.s.top());
     }
     
-    bool OrgChart::Iterator::operator!=(const Iterator &other){
+    bool OrgChart::Iterator::operator!=(const Iterator &other) const{
         return !(*this == other);
     }
 
-    OrgChart::Iterator& OrgChart::Iterator::operator=(Iterator &other){
+    OrgChart::Iterator& OrgChart::Iterator::operator=(const Iterator &other){
         if(this == &other){//a=a
             return(*this); 
         }
