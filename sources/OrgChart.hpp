@@ -21,18 +21,18 @@ namespace ariel{
             void preorder(struct Tree* node);
             public:
             Iterator();
-            Iterator(const OrgChart &o ,std::string order);
+            Iterator(const OrgChart &o ,const std::string& order);
             Iterator& operator++();
             std::string operator*();
-            bool operator==(Iterator other);
-            bool operator!=(Iterator other);
+            bool operator==(const Iterator &other);
+            bool operator!=(const Iterator &other);
             Iterator& operator=(Iterator &other);
             std::string* operator->();
             struct Tree* get_node();
         };
         OrgChart();
-        OrgChart& add_root(std::string s);
-        OrgChart& add_sub(std::string sup, std::string inf);
+        OrgChart& add_root(const std::string &s);
+        OrgChart& add_sub(const std::string &sup, const std::string &inf);
 
         Iterator begin() const;
         Iterator end() const;

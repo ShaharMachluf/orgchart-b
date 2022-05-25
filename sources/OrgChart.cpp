@@ -9,12 +9,12 @@ namespace ariel{
         this->ptr = NULL;
         this->order = "";
     }
-    OrgChart::Iterator::Iterator(const OrgChart &o, string order){
+    OrgChart::Iterator::Iterator(const OrgChart &o, const string& order){
         this->ptr = o.root;
         this->order = order;
         if(order == "level"){
             queue<struct Tree*> temp;
-            if(this->ptr->data!= ""){
+            if(!this->ptr->data.empty()){
                 temp.push(this->ptr);
             }
             while (!temp.empty())
@@ -31,23 +31,24 @@ namespace ariel{
         }
         else if(order == "reverse"){
             queue<struct Tree*> temp;
-            if(this->ptr->data!= ""){
+            if(!this->ptr->data.empty()){
                 temp.push(this->ptr);
             }
             while (!temp.empty())
             {
                 struct Tree* curr = temp.front();
                 temp.pop();
-                if(curr->children.at(0)!=NULL){
-                    for(unsigned int i=curr->children.size()-1; i>=0; i--){
-                        temp.push(curr->children.at(i));
+                if(!curr->children.empty() && curr->children.at(0)!=NULL){
+                    for(int i=curr->children.size()-1; i>=0; i--){
+                        uint pos = unsigned (i);
+                        temp.push(curr->children.at(pos));
                     }
                 }
                 this->s.push(curr);
             } 
         }
         else{
-            if(this->ptr->data != ""){
+            if(!this->ptr->data.empty()){
                 preorder(this->ptr);
             }
         }
@@ -77,22 +78,23 @@ namespace ariel{
         return this->get_node()->data;
     }
     
-    bool OrgChart::Iterator::operator==(Iterator other){
+    bool OrgChart::Iterator::operator==(const Iterator &other){
         if(this->order == "level" || this->order == "pre"){
             if(this->q.empty() && other.q.empty()){
                 return true;
             }
             return(this->q.front() == other.q.front());
         }
-        else{
-            if(this->s.empty() && other.s.empty()){
-                return true;
-            }
-            return(this->s.top() == other.s.top());
+        if(this->s.empty() && other.s.empty()){
+            return true;
         }
+        if(other.s.empty()){
+            return false;
+        }
+        return(this->s.top() == other.s.top());
     }
     
-    bool OrgChart::Iterator::operator!=(Iterator other){
+    bool OrgChart::Iterator::operator!=(const Iterator &other){
         return !(*this == other);
     }
 
@@ -115,9 +117,7 @@ namespace ariel{
         if(this->order == "level" || this->order == "pre"){
             return(this->q.front());
         }
-        else{
             return(this->s.top());
-        }
     }
     
     OrgChart::OrgChart(){
@@ -126,7 +126,7 @@ namespace ariel{
         (*this->root).children.push_back(NULL);
     }
 
-    OrgChart& OrgChart::add_root(string s){
+    OrgChart& OrgChart::add_root(const string &s){
         if(s.empty()){
             throw("can't enter empty string");
         }
@@ -134,7 +134,7 @@ namespace ariel{
         return *this;
     }
 
-    OrgChart& OrgChart::add_sub(string sup, string inf){
+    OrgChart& OrgChart::add_sub(const string &sup, const string &inf){
         if(inf.empty()){
             throw("can't enter empty string");
         }
@@ -161,39 +161,39 @@ namespace ariel{
         return end_level_order();
     }
     OrgChart::Iterator OrgChart::begin_level_order() const{
-        if(this->root->data == ""){
+        if(this->root->data.empty()){
             throw("chart is empty!");
         }
         return Iterator(*this, "level");
     }
     OrgChart::Iterator OrgChart::end_level_order() const{
-        if(this->root->data == ""){
+        if(this->root->data.empty()){
             throw("chart is empty!");
         }
         Iterator end;
         return end;
     }
     OrgChart::Iterator OrgChart::begin_reverse_order(){
-        if(this->root->data == ""){
+        if(this->root->data.empty()){
             throw("chart is empty!");
         }
         return Iterator(*this, "reverse");
     }
     OrgChart::Iterator OrgChart::reverse_order(){
-        if(this->root->data == ""){
+        if(this->root->data.empty()){
             throw("chart is empty!");
         }
         Iterator end;
         return end;
     }
     OrgChart::Iterator OrgChart::begin_preorder(){
-        if(this->root->data == ""){
+        if(this->root->data.empty()){
             throw("chart is empty!");
         }
         return Iterator(*this, "pre");
     }
     OrgChart::Iterator OrgChart::end_preorder(){
-        if(this->root->data == ""){
+        if(this->root->data.empty()){
             throw("chart is empty!");
         }
         Iterator end;
@@ -203,6 +203,7 @@ namespace ariel{
         string res;
         for(auto it = other.begin(); it != other.end(); ++it){
             res += *it;
+            res += " ";
         }
         return output<<res;
     }
