@@ -31,6 +31,7 @@ namespace ariel{
             struct Tree* get_node();
         };
         OrgChart();
+        OrgChart(const OrgChart &other);
         OrgChart& add_root(const std::string &s);
         OrgChart& add_sub(const std::string &sup, const std::string &inf);
 
@@ -39,13 +40,14 @@ namespace ariel{
         Iterator begin_level_order() const;
         Iterator end_level_order() const;
 
-        Iterator begin_reverse_order();
-        Iterator reverse_order();
+        Iterator begin_reverse_order() const;
+        Iterator reverse_order() const;
 
-        Iterator begin_preorder();
-        Iterator end_preorder();
+        Iterator begin_preorder() const;
+        Iterator end_preorder() const;
 
         friend std::ostream& operator<<(std::ostream& output, const OrgChart& other);
+        OrgChart& operator=(const OrgChart &other);
         ~OrgChart();
     };
 }
